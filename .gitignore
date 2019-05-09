@@ -19,3 +19,4 @@ test/model/test/*
 !.gitkeep
 .idea
 current_data
+data/auxiliary
