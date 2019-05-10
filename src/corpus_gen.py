@@ -75,3 +75,31 @@ for tag in tqdm.tqdm(tag_list):
     File_object.close()
 
 tag_list
+
+from collections import Counter
+import re
+
+tag_desc_common = dict.fromkeys(tag_list)
+tag_items_common = dict.fromkeys(tag_list)
+
+# c = Counter()
+for tag in tqdm.tqdm(tag_list):
+    tag_desc = ''
+    tag_items = ''
+    for row in tqdm.tqdm(expanded_rows_df[expanded_rows_df['tags'] == tag].itertuples()):
+        tag_desc += row[1]
+        tag_items += row[2]
+    tag_desc = re.sub('[^a-zA-Z0-9 \n\.]', ' ', tag_desc)
+    tag_desc = tag_desc.replace('  ',' ')
+    tag_items = re.sub('[^a-zA-Z0-9 \n\.]', ' ', tag_items)
+    tag_items = tag_items.replace('  ',' ')
+    from collections import Counter
+    # c = Counter()
+    split = tag_desc.split()
+    Counter = Counter(split)
+    tag_desc_common[tag] = Counter.most_common(100)
+    # c = Counter()
+    # counter_var = c(tag_items.split())
+    # tag_items_common[tag] = counter_var.most_common(100)
+
+pd.DataFrame(tag_desc_common).to_csv('../data/auxiliary/top100_per_tag.csv')
