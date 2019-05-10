@@ -44,8 +44,8 @@ expanded_rows_df = expanded_rows_df[expanded_rows_df['tags'].isin(tag_list)]
 
 expanded_rows_df.shape
 
-expanded_rows_df['menu_descriptions'] = ' ' + expanded_rows_df['menu_descriptions']
-expanded_rows_df['menu_items'] = ' ' + expanded_rows_df['menu_items']
+expanded_rows_df['menu_descriptions'] = ' ' + expanded_rows_df['menu_descriptions'].str.replace('\d+','')
+expanded_rows_df['menu_items'] = ' ' + expanded_rows_df['menu_items'].str.replace('\d+','')
 
 # test_agg = expanded_rows_df.groupby('tags').agg('sum')
 
